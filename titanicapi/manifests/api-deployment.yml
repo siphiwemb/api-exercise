@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: titanic-ns
+  name: titanicapi
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: titanicapi
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: titanicapi
+    spec:
+      containers:
+      - name: titanicapi
+        image: 477692995944.dkr.ecr.af-south-1.amazonaws.com/titanic:d297f45411953cffcb5d5ea7de775d3a002dc502
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
